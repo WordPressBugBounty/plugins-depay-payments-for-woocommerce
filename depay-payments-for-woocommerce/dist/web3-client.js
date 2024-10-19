@@ -76,6 +76,7 @@
             method: 'POST',
             body: JSON.stringify(batch),
             headers: { 'Content-Type': 'application/json' },
+            signal: AbortSignal.timeout(10000)  // 10-second timeout
           }
         ).then((response)=>{
           if(response.ok) {
@@ -182,6 +183,7 @@
   };
 
   const setProvider$2 = (blockchain, provider)=> {
+    if(provider == undefined) { return }
     if(getAllProviders$1()[blockchain] === undefined) { getAllProviders$1()[blockchain] = []; }
     const index = getAllProviders$1()[blockchain].indexOf(provider);
     if(index > -1) {
@@ -229,7 +231,8 @@
               },
               referrer: "",
               referrerPolicy: "no-referrer",
-              body: JSON.stringify({ method: 'net_version', id: 1, jsonrpc: '2.0' })
+              body: JSON.stringify({ method: 'net_version', id: 1, jsonrpc: '2.0' }),
+              signal: AbortSignal.timeout(10000)  // 10-second timeout
             });
           } catch (e) {}
           if(!_optionalChain$4([response, 'optionalAccess', _ => _.ok])) { return resolve(999) }
@@ -332,6 +335,7 @@
             method: 'POST',
             body: JSON.stringify(batch),
             headers: { 'Content-Type': 'application/json' },
+            signal: AbortSignal.timeout(10000)  // 10-second timeout
           }
         ).then((response)=>{
           if(response.ok) {
@@ -428,6 +432,7 @@
   };
 
   const setProvider$1 = (blockchain, provider)=> {
+    if(provider == undefined) { return }
     if(getAllProviders()[blockchain] === undefined) { getAllProviders()[blockchain] = []; }
     const index = getAllProviders()[blockchain].indexOf(provider);
     if(index > -1) {
@@ -475,7 +480,8 @@
               },
               referrer: "",
               referrerPolicy: "no-referrer",
-              body: JSON.stringify({ method: 'getIdentity', id: 1, jsonrpc: '2.0' })
+              body: JSON.stringify({ method: 'getIdentity', id: 1, jsonrpc: '2.0' }),
+              signal: AbortSignal.timeout(10000)  // 10-second timeout
             });
           } catch (e) {}
           if(!_optionalChain$2([response, 'optionalAccess', _ => _.ok])) { return resolve(999) }
@@ -533,8 +539,8 @@
     setProvider: setProvider$1,
   };
 
-  let supported = ['ethereum', 'bsc', 'polygon', 'solana', 'fantom', 'arbitrum', 'avalanche', 'gnosis', 'optimism', 'base'];
-  supported.evm = ['ethereum', 'bsc', 'polygon', 'fantom', 'arbitrum', 'avalanche', 'gnosis', 'optimism', 'base'];
+  let supported = ['ethereum', 'bsc', 'polygon', 'solana', 'fantom', 'arbitrum', 'avalanche', 'gnosis', 'optimism', 'base', 'worldchain'];
+  supported.evm = ['ethereum', 'bsc', 'polygon', 'fantom', 'arbitrum', 'avalanche', 'gnosis', 'optimism', 'base', 'worldchain'];
   supported.solana = ['solana'];
 
   function _optionalChain$1(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }
