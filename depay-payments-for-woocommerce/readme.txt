@@ -4,7 +4,7 @@ Tags: web3, payments, woocommerce, depay, crypto
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 2.12.19
+Stable tag: 2.12.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,10 @@ Denominate your items in crypto-currencies.
 
 
 == Changelog ==
+
+= 2025-1-22 - v2.12.20 =
+* fixes changelog.txt file
+* fixes some solana loading issues
 
 = 2025-1-6 - v2.12.19 =
 * fixes checkout when login and account creation at checkout is enabled
